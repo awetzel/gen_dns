@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Module gen_dns</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module gen_dns</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Generic DNS server.
+<p>Copyright © (C) 2010 Inaka Labs SRL</p>
+
+<p><b>Behaviours:</b> <a href="gen_server.html"><tt>gen_server</tt></a>.</p>
+<p><b>Authors:</b> Fernando Benavides (<a href="mailto:fernando.benavides@inakanetworks.com"><tt>fernando.benavides@inakanetworks.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2><p>Generic DNS server</p>
+  
+   The user module should export:
+  <ul>
+     <li>
+     <pre>init(Args::term()) -&gt; {ok, State::term()} |
+                                 {stop, Reason::term()}</pre>
+       Opens and/or initializes the server.<br>
+     </li><li>
+     <pre>handle_query(Query::#dns_rec{}, State::term()) -&gt;
+           {ok, Response::#dns_rec{} | default, State} |
+           {error, Reason :: term(), State}</pre>
+       Given a DNS Query, returns the corresponding DNS record.  If it returns 'default',
+       the gen_dns server will query its default DNS Server to resolve the query<br>
+     </li><li>
+     <pre>handle_call(Msg::term(), From::reference(), State::term()) -&gt;
+          {reply, Reply::term(), State::term()}
+          {noreply, State::term()}
+          {stop, Reason::normal | shutdown | term(), Reply::term(), State::term()} %% terminate(State) is called</pre>
+       Called from <code>gen_dns:call/2</code><br>
+     </li><li>
+     <pre>terminate(Reason :: normal | shutdown | term(), State) -&gt; _</pre>
+       Let the user module clean up.  Always called when server terminates.<br>
+     </li></ul>
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-ip_address">ip_address()</a></h3>
+<p><tt>ip_address() = {<a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>}</tt></p>
+
+
+<h3 class="typedecl"><a name="type-start_option">start_option()</a></h3>
+<p><tt>start_option() = {timeout, <a href="#type-non_neg_integer">non_neg_integer()</a> | infinity | hibernate} | {debug, [trace | log | {logfile, string()} | statistics | debug]} | {default_server, {<a href="#type-ip_address">ip_address()</a>, <a href="#type-pos_integer">pos_integer()</a>}} | {port, <a href="#type-pos_integer">pos_integer()</a>}</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#call-2">call/2</a></td><td>Make a call to a generic server.</td></tr>
+<tr><td valign="top"><a href="#call-3">call/3</a></td><td>Make a call to a generic server.</td></tr>
+<tr><td valign="top"><a href="#reply-2">reply/2</a></td><td> Send a reply to the client.</td></tr>
+<tr><td valign="top"><a href="#start-3">start/3</a></td><td> Starts a generic DNS server.</td></tr>
+<tr><td valign="top"><a href="#start-4">start/4</a></td><td> Starts a named generic DNS server.</td></tr>
+<tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td> Starts and links a generic DNS server.</td></tr>
+<tr><td valign="top"><a href="#start_link-4">start_link/4</a></td><td> Starts and links a named generic DNS server.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="call-2">call/2</a></h3>
+<div class="spec">
+<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term()) -&gt; Response::term()</tt></p>
+</div><p>Make a call to a generic server.
+   If the server is located at another node, that node will be monitored.
+   If the client is trapping exits and is linked server termination is handled here</p>
+
+<h3 class="function"><a name="call-3">call/3</a></h3>
+<div class="spec">
+<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term(), Timeout::<a href="#type-non_neg_integer">non_neg_integer()</a> | infinity) -&gt; Response::term()</tt></p>
+</div><p>Make a call to a generic server.
+   If the server is located at another node, that node will be monitored.
+   If the client is trapping exits and is linked server termination is handled here</p>
+
+<h3 class="function"><a name="reply-2">reply/2</a></h3>
+<div class="spec">
+<p><tt>reply(From::reference(), Reply::term()) -&gt; {term(), term()}</tt></p>
+</div><p> Send a reply to the client</p>
+
+<h3 class="function"><a name="start-3">start/3</a></h3>
+<div class="spec">
+<p><tt>start(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+</div><p> Starts a generic DNS server.</p>
+
+<h3 class="function"><a name="start-4">start/4</a></h3>
+<div class="spec">
+<p><tt>start(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+</div><p> Starts a named generic DNS server.</p>
+
+<h3 class="function"><a name="start_link-3">start_link/3</a></h3>
+<div class="spec">
+<p><tt>start_link(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+</div><p> Starts and links a generic DNS server.</p>
+
+<h3 class="function"><a name="start_link-4">start_link/4</a></h3>
+<div class="spec">
+<p><tt>start_link(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+</div><p> Starts and links a named generic DNS server.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Dec 21 2010, 10:58:31.</i></p>
+</body>
+</html>

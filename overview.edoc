@@ -1,0 +1,10 @@
+** this is the overview.doc file for the application 'gen_dns' **
+@author Fernando Benavides <fernando.benavides@inakanetworks.com>
+@copyright 2010 Fernando Benavides <fernando.benavides@inakanetworks.com>
+@version 1.0
+@reference Check the project on <a href="https://github.com/elbrujohalcon/gen_dns">Github</a>
+@title Generic DNS Server
+@doc
+== Overview ==
+<b>gen_dns</b> is very basic generic DNS server. 
+It lets the user define its own DNS resolving modules implmenting the <i>gen_dns</i> behaviour
