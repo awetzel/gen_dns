@@ -133,7 +133,7 @@ call(Name, Request, Timeout) ->
 
 %%% @doc  Send a reply to the client
 %%% @spec reply(From::reference(), Reply::term()) -> {term(), term()}
--spec reply(reference(), X) -> {_, X}.
+-spec reply({pid(), Y}, X) -> {Y, X}.
 reply(From, Reply) ->
   gen_server:reply(From, Reply).
 
@@ -202,11 +202,7 @@ handle_info({dns_request, Socket, IP, Port, Payload},
       [[{T, D} || #dns_query{domain = D, type = T} <- DecPayload#dns_rec.qdlist],
        [{T, D} || #dns_rr{data = D, type = T} <- Response#dns_rec.anlist]]),
     
-    case Response of
-      no_response -> ok;
-      Response ->
-        gen_udp:send(Socket, IP, Port, inet_dns:encode(Response))
-    end,
+    ok = gen_udp:send(Socket, IP, Port, inet_dns:encode(Response)),
 
     {noreply, State#state{mod_state = NewModState}}
   catch

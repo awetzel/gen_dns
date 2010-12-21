@@ -15,18 +15,19 @@ task :make_erl do
   print " done\n"
 end
 
-task :run, [:node, :config, :withsasl, :processes] do |t, args|
+task :run, [:node, :config, :withsasl] do |t, args|
   args.with_defaults(:node => "dns",
-                     :config => Socket.gethostname) # Erlang's maximum is 134217727
+                     :withsasl => "true",
+                     :config => Socket.gethostname)
   sasl = args.withsasl == "true" ? "-boot start_sasl" : ""
   configarg = File.exist?("#{args.config}.config") ? "-config #{args.config}" : ""
-  cmdline = "erl +W w +P #{configarg} -name #{args.node} -setcookie dns -pa ebin -s crypto -s inets +Bc +K true -smp enable"
+  cmdline = "erl +W w #{configarg} -name #{args.node} #{sasl} -setcookie dns -pa ebin -s crypto -s inets +Bc +K true -smp enable"
   puts cmdline
   sh cmdline
 end
 
 task :build_plt do
-  sh 'dialyzer ebin deps/riak_err/ebin --build_plt --apps erts kernel stdlib inets crypto eunit'
+  sh 'dialyzer ebin --build_plt --apps erts kernel stdlib inets crypto eunit'
   sh 'mv ~/.dialyzer_plt ~/.gen_dns_dialyzer_plt'
 end
 
