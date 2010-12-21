@@ -1,0 +1,13 @@
+{application, gen_dns,
+ [
+  {description, "A very basic generic DNS server"},
+  {vsn, "1.0"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  crypto
+                 ]},
+  {mod, {no_app, []}},
+	{env, []}
+ ]}.
