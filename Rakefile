@@ -46,3 +46,7 @@ task :doc do
   sh "cp src/overview.edoc doc/html"
   sh 'erl -noshell -eval "edoc:files(filelib:wildcard(\"src/*.erl\"), [{dir, \"doc/html\"}, {includes, [\"include\"]}, {source_path, [\"include\", \"src\"]}])" -s init stop'
 end
+
+task :xref do
+  sh "rebar xref"
+end
