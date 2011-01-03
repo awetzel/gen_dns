@@ -26,7 +26,34 @@ start_link(Port, Options) ->
              case gen_udp:open(Port, Options) of
                {ok, Socket} ->
                  loop(Caller, Socket);
+               {error, eacces} ->
+                 case Port < 1024 of
+                   true ->
+                     case fdsrv:start() of
+                       {ok, _FDPid} ->
+                         try_with_fdsrv(Caller, Port, Options);
+                       {error, {already_started, _FDPid}} ->
+                         try_with_fdsrv(Caller, Port, Options);
+                       Error ->
+                         throw({fdsrv_start_failed, Error})
+                     end;
+                   false ->
+                     throw(eacces)
+                 end;
                Error ->
                  throw(Error)
              end
      end)}.
+
+try_with_fdsrv(Caller, Port, Options) ->
+  case fdsrv:bind_socket(udp, Port) of
+    {ok, Fd} ->
+      case gen_udp:open(Port, [{fd, Fd} | Options]) of
+        {ok, Socket} ->
+          loop(Caller, Socket);
+        Error ->
+          throw(Error)
+      end;
+    Error ->
+      throw({fdsrv_bind_failed, Error})
+  end.

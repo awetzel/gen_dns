@@ -19,7 +19,7 @@
 
 -spec start() -> {ok, pid()}.
 start() ->
-  gen_dns:start({local, ?MODULE}, ?MODULE, [], [{port, 9053}]).
+  gen_dns:start({local, ?MODULE}, ?MODULE, [], [{port, 53}]).
 
 -spec stop() -> ok.
 stop() ->

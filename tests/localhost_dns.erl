@@ -19,7 +19,7 @@
 
 -spec start() -> {ok, pid()}.
 start() ->
-  gen_dns:start({local, ?MODULE}, ?MODULE, [], [{port, 9053}]).
+  gen_dns:start({local, ?MODULE}, ?MODULE, [], [{port, 53}]).
 
 -spec stop() -> ok.
 stop() ->
@@ -39,7 +39,8 @@ handle_query(Q = #dns_rec{qdlist = [Question|_]}, State) ->
                                    ttl = 666,
                                    data = case Question#dns_query.type of
                                             a -> {127, 0, 0, 1};
-                                            _ -> {50, "127.0.0.1"}
+                                            mx -> {50, "127.0.0.1"};
+                                            _ -> "127.0.0.1"
                                           end}]}, State}.
 
 -spec handle_call(stop, reference(), state()) -> {stop, normal, ok, state()}.
