@@ -1,2 +1,3 @@
+{application,gen_dns}.
 {packages,[]}.
-{modules,[dns_listener,gen_dns]}.
+{modules,[default_dns,dns_listener,gen_dns,localhost_dns]}.

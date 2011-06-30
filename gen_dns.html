@@ -42,11 +42,11 @@
 <h2><a name="types">Data Types</a></h2>
 
 <h3 class="typedecl"><a name="type-ip_address">ip_address()</a></h3>
-<p><tt>ip_address() = {<a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>, <a href="#type-pos_integer">pos_integer()</a>}</tt></p>
+<p><tt>ip_address() = {pos_integer(), pos_integer(), pos_integer(), pos_integer()}</tt></p>
 
 
 <h3 class="typedecl"><a name="type-start_option">start_option()</a></h3>
-<p><tt>start_option() = {timeout, <a href="#type-non_neg_integer">non_neg_integer()</a> | infinity | hibernate} | {debug, [trace | log | {logfile, string()} | statistics | debug]} | {default_server, {<a href="#type-ip_address">ip_address()</a>, <a href="#type-pos_integer">pos_integer()</a>}} | {port, <a href="#type-pos_integer">pos_integer()</a>}</tt></p>
+<p><tt>start_option() = {timeout, non_neg_integer() | infinity | hibernate} | {debug, [trace | log | {logfile, string()} | statistics | debug]} | {default_server, {<a href="#type-ip_address">ip_address()</a>, pos_integer()}} | {port, pos_integer()}</tt></p>
 
 
 <h2><a name="index">Function Index</a></h2>
@@ -63,45 +63,45 @@
 
 <h3 class="function"><a name="call-2">call/2</a></h3>
 <div class="spec">
-<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term()) -&gt; Response::term()</tt></p>
+<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term()) -&gt; Response::term()</tt><br></p>
 </div><p>Make a call to a generic server.
    If the server is located at another node, that node will be monitored.
    If the client is trapping exits and is linked server termination is handled here</p>
 
 <h3 class="function"><a name="call-3">call/3</a></h3>
 <div class="spec">
-<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term(), Timeout::<a href="#type-non_neg_integer">non_neg_integer()</a> | infinity) -&gt; Response::term()</tt></p>
+<p><tt>call(Name::atom() | pid() | {global, atom()}, Request::term(), Timeout::non_neg_integer() | infinity) -&gt; Response::term()</tt><br></p>
 </div><p>Make a call to a generic server.
    If the server is located at another node, that node will be monitored.
    If the client is trapping exits and is linked server termination is handled here</p>
 
 <h3 class="function"><a name="reply-2">reply/2</a></h3>
 <div class="spec">
-<p><tt>reply(From::reference(), Reply::term()) -&gt; {term(), term()}</tt></p>
+<p><tt>reply(From::reference(), Reply::term()) -&gt; {term(), term()}</tt><br></p>
 </div><p> Send a reply to the client</p>
 
 <h3 class="function"><a name="start-3">start/3</a></h3>
 <div class="spec">
-<p><tt>start(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+<p><tt>start(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt><br></p>
 </div><p> Starts a generic DNS server.</p>
 
 <h3 class="function"><a name="start-4">start/4</a></h3>
 <div class="spec">
-<p><tt>start(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+<p><tt>start(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt><br></p>
 </div><p> Starts a named generic DNS server.</p>
 
 <h3 class="function"><a name="start_link-3">start_link/3</a></h3>
 <div class="spec">
-<p><tt>start_link(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+<p><tt>start_link(Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt><br></p>
 </div><p> Starts and links a generic DNS server.</p>
 
 <h3 class="function"><a name="start_link-4">start_link/4</a></h3>
 <div class="spec">
-<p><tt>start_link(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt></p>
+<p><tt>start_link(Name::{local | global, atom()}, Mod::atom(), Args::term(), Options::[<a href="#type-start_option">start_option()</a>]) -&gt; {ok, pid()} | {error, {already_started, pid()}} | {error, Reason::term()}</tt><br></p>
 </div><p> Starts and links a named generic DNS server.</p>
 <hr>
 
 <div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
-<p><i>Generated by EDoc, Dec 21 2010, 10:58:31.</i></p>
+<p><i>Generated by EDoc, Jun 30 2011, 10:06:51.</i></p>
 </body>
 </html>
