@@ -1,6 +1,6 @@
 # Overview
 **gen_dns** is very basic generic DNS server. 
-It lets the user define its own DNS resolving modules implmenting the *gen_dns* behaviour
+It lets the user define its own DNS resolving modules implementing the *gen_dns* behaviour
 
 # Contact Us
 For **questions** or **general comments** regarding the use of this library, please use our public
